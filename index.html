@@ -144,9 +144,7 @@
 
       const sqrtPivot = Math.sqrt(pivot);
       const Velo = Math.sqrt(high) - Math.sqrt(low);
-
-      // <-- Added this line to display Velo
-      document.getElementById("Velo").textContent = `Velo: ${Velo.toFixed(4)}`;
+      document.getElementById("Velo").textContent = `Velo: ${Velo.toFixed(15)}`;
 
       const levels = deltas.map(delta => ({
         delta,

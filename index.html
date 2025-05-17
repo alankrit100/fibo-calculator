@@ -54,6 +54,7 @@
     <div class="md:w-1/2 p-8 bg-gray-800">
       <h2 class="text-2xl font-bold mb-6 text-green-400">Fibonacci Levels</h2>
       <p id="pivotDisplay" class="text-sm text-gray-300 mb-4">Pivot: --</p>
+      <p id="Velo" class="text-sm text-gray-300 mb-4">Velo: --</p>
       <table class="w-full text-left text-sm">
         <thead class="border-b border-gray-600 text-white">
           <tr>
@@ -141,8 +142,12 @@
       }
       document.getElementById("pivotDisplay").textContent = `Pivot: ${pivot.toFixed(2)}`;
 
-
       const sqrtPivot = Math.sqrt(pivot);
+      const Velo = Math.sqrt(high) - Math.sqrt(low);
+
+      // <-- Added this line to display Velo
+      document.getElementById("Velo").textContent = `Velo: ${Velo.toFixed(4)}`;
+
       const levels = deltas.map(delta => ({
         delta,
         plus: Math.pow(sqrtPivot + delta, 2),

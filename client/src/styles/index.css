@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.input-box {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 0.375rem;
+  color: white;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.input-box:focus {
+  border-color: #3b82f6;
+}

@@ -24,15 +24,19 @@ export function calculateLevels({ open, high, low, close, manualPivot }) {
   let minLowDiff = Infinity;
 
   levels.forEach((lv, i) => {
-    const highDiff = Math.abs(lv.plus - high);
-    if (highDiff < minHighDiff) {
-      minHighDiff = highDiff;
-      closestToHighIdx = i;
+    if (!isNaN(high)) {
+      const highDiff = Math.abs(lv.plus - high);
+      if (highDiff < minHighDiff) {
+        minHighDiff = highDiff;
+        closestToHighIdx = i;
+      }
     }
-    const lowDiff = Math.abs(lv.minus - low);
-    if (lowDiff < minLowDiff) {
-      minLowDiff = lowDiff;
-      closestToLowIdx = i;
+    if (!isNaN(low) && lv.delta < sqrtPivot) {
+      const lowDiff = Math.abs(lv.minus - low);
+      if (lowDiff < minLowDiff) {
+        minLowDiff = lowDiff;
+        closestToLowIdx = i;
+      }
     }
   });
 

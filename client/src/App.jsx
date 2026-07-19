@@ -16,6 +16,15 @@ export default function App() {
   const handleManualCalculate = useCallback((inputs) => {
     setError(null);
 
+    if (!isNaN(inputs.manualPivot)) {
+      const res = calculateLevels({
+        open: 0, high: inputs.high, low: inputs.low, close: 0,
+        manualPivot: inputs.manualPivot,
+      });
+      setResults(res);
+      return;
+    }
+
     const errMsg = validateOHLC(inputs);
     if (errMsg) {
       setError(errMsg);
@@ -23,26 +32,24 @@ export default function App() {
       return;
     }
 
-    if (!isNaN(inputs.manualPivot)) {
-      const res = calculateLevels({
-        open: 0, high: 0, low: 0, close: 0,
-        manualPivot: inputs.manualPivot,
-      });
-      setResults(res);
-    } else {
-      const res = calculateLevels({
-        open: inputs.open,
-        high: inputs.high,
-        low: inputs.low,
-        close: inputs.close,
-      });
-      setResults(res);
-    }
+    const res = calculateLevels({
+      open: inputs.open, high: inputs.high, low: inputs.low, close: inputs.close,
+    });
+    setResults(res);
   }, []);
 
   const handleOptionsCalculate = useCallback((inputs) => {
     setError(null);
 
+    if (!isNaN(inputs.manualPivot)) {
+      const res = calculateLevels({
+        open: 0, high: inputs.high, low: inputs.low, close: 0,
+        manualPivot: inputs.manualPivot,
+      });
+      setResults(res);
+      return;
+    }
+
     const errMsg = validateOHLC(inputs);
     if (errMsg) {
       setError(errMsg);
@@ -50,21 +57,10 @@ export default function App() {
       return;
     }
 
-    if (!isNaN(inputs.manualPivot)) {
-      const res = calculateLevels({
-        open: 0, high: 0, low: 0, close: 0,
-        manualPivot: inputs.manualPivot,
-      });
-      setResults(res);
-    } else {
-      const res = calculateLevels({
-        open: inputs.open,
-        high: inputs.high,
-        low: inputs.low,
-        close: inputs.close,
-      });
-      setResults(res);
-    }
+    const res = calculateLevels({
+      open: inputs.open, high: inputs.high, low: inputs.low, close: inputs.close,
+    });
+    setResults(res);
   }, []);
 
   return (

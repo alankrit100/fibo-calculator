@@ -8,7 +8,7 @@ export default function PivotDisplay({ pivot, sqrtPivot, velo }) {
         SQRT: <span className="text-white font-medium">{sqrtPivot.toFixed(15)}</span>
       </p>
       <p className="text-sm text-gray-300">
-        Velo: <span className="text-white font-medium">{velo.toFixed(15)}</span>
+        Velo: <span className="text-white font-medium">{isNaN(velo) ? "—" : velo.toFixed(15)}</span>
       </p>
     </div>
   );

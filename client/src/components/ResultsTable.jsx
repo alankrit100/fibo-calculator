@@ -6,14 +6,16 @@ export default function ResultsTable({ levels, closestToHighIdx, closestToLowIdx
       <table className="w-full text-left text-sm">
         <thead className="border-b border-gray-600 text-white">
           <tr>
+            <th className="px-2 py-1">S.No</th>
             <th className="px-2 py-1">Δ</th>
             <th className="px-2 py-1">+Δ</th>
             <th className="px-2 py-1">−Δ</th>
+            <th className="px-2 py-1">S.No</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td colSpan="3" className="text-center py-4 text-gray-400">
+            <td colSpan="5" className="text-center py-4 text-gray-400">
               Results will appear here after calculation.
             </td>
           </tr>
@@ -27,9 +29,11 @@ export default function ResultsTable({ levels, closestToHighIdx, closestToLowIdx
       <table className="w-full text-left text-sm">
         <thead className="border-b border-gray-600 text-white sticky top-0 bg-gray-800">
           <tr>
+            <th className="px-2 py-1">S.No</th>
             <th className="px-2 py-1">Δ</th>
             <th className="px-2 py-1">+Δ</th>
             <th className="px-2 py-1">−Δ</th>
+            <th className="px-2 py-1">S.No</th>
           </tr>
         </thead>
         <tbody>
@@ -44,9 +48,11 @@ export default function ResultsTable({ levels, closestToHighIdx, closestToLowIdx
               : "text-red-400";
             return (
               <tr key={i} className="hover:bg-gray-700">
+                <td className="px-2 py-1 text-gray-400">{i + 1}</td>
                 <td className="px-2 py-1 font-medium">{lv.delta}</td>
                 <td className={"px-2 py-1 " + plusClass}>{formatPrice(lv.plus)}</td>
                 <td className={"px-2 py-1 " + minusClass}>{formatPrice(lv.minus)}</td>
+                <td className="px-2 py-1 text-gray-400">{i + 1}</td>
               </tr>
             );
           })}

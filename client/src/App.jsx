@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import InputModeToggle from "./components/InputModeToggle";
 import ManualForm from "./components/ManualForm";
 import OptionsForm from "./components/OptionsForm";
+import NotesPanel from "./components/NotesPanel";
 import PivotDisplay from "./components/PivotDisplay";
 import ResultsTable from "./components/ResultsTable";
 import ExportControls from "./components/ExportControls";
@@ -100,8 +101,10 @@ export default function App() {
           )}
 
           {!results && (
-            <p className="text-gray-400 text-sm">Results will appear here after calculation.</p>
+            <p className="text-gray-400 text-base">Results will appear here after calculation.</p>
           )}
+
+          <NotesPanel />
         </div>
       </div>
     </div>

@@ -32,11 +32,11 @@ export default function OptionsForm({ onCalculate }) {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <h2 className="text-2xl font-bold text-blue-400">Options Fibonacci Calculator</h2>
       {FIELDS.map((key) => (
         <div key={key}>
-          <label className="block mb-1 text-sm font-medium capitalize">{key}</label>
+          <label className="block mb-1 text-base font-semibold capitalize">{key}</label>
           <input
             type="number"
             value={values[key]}
@@ -46,7 +46,7 @@ export default function OptionsForm({ onCalculate }) {
         </div>
       ))}
       <div className="pt-4 border-t border-gray-700">
-        <label className="block mb-1 text-sm font-medium text-yellow-400">
+        <label className="block mb-1 text-base font-semibold text-yellow-400">
           OR Enter Pivot Directly
         </label>
         <input
@@ -59,7 +59,7 @@ export default function OptionsForm({ onCalculate }) {
       </div>
       <button
         onClick={handleCalculate}
-        className="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-md font-semibold cursor-pointer"
+        className="w-full bg-blue-600 hover:bg-blue-700 py-3 text-lg rounded-md font-semibold cursor-pointer"
       >
         Calculate Fibonacci Levels
       </button>

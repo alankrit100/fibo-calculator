@@ -4,16 +4,18 @@ import { generateCSV } from "../utils/formatters";
 export default function ExportControls({ levels }) {
   const [lower, setLower] = useState("");
   const [upper, setUpper] = useState("");
+  const [exportError, setExportError] = useState("");
 
   const handleExport = () => {
+    setExportError("");
     const lb = parseFloat(lower);
     const ub = parseFloat(upper);
     if (isNaN(lb) || isNaN(ub)) {
-      alert("Enter valid upper and lower bounds.");
+      setExportError("Enter valid upper and lower bounds.");
       return;
     }
     if (!levels || levels.length === 0) {
-      alert("No data to export.");
+      setExportError("No data to export.");
       return;
     }
 
@@ -27,28 +29,31 @@ export default function ExportControls({ levels }) {
 
   return (
     <div className="flex gap-2 items-center pt-4 flex-wrap">
-      <label className="text-sm">Lower Bound</label>
+      <label className="text-base font-medium text-gray-200">Lower Bound</label>
       <input
         type="number"
         step="0.01"
         value={lower}
         onChange={(e) => setLower(e.target.value)}
-        className="input-box w-24"
+        className="input-box w-28"
       />
-      <label className="text-sm">Upper Bound</label>
+      <label className="text-base font-medium text-gray-200">Upper Bound</label>
       <input
         type="number"
         step="0.01"
         value={upper}
         onChange={(e) => setUpper(e.target.value)}
-        className="input-box w-24"
+        className="input-box w-28"
       />
       <button
         onClick={handleExport}
-        className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md font-semibold cursor-pointer"
+        className="bg-blue-500 hover:bg-blue-600 px-5 py-3 text-base rounded-md font-semibold cursor-pointer"
       >
         Export CSV
       </button>
+      {exportError && (
+        <p className="w-full text-red-400 text-base">{exportError}</p>
+      )}
     </div>
   );
 }

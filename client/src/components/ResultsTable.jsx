@@ -3,14 +3,14 @@ import { formatPrice } from "../utils/formatters";
 export default function ResultsTable({ levels, closestToHighIdx, closestToLowIdx }) {
   if (!levels || levels.length === 0) {
     return (
-      <table className="w-full text-left text-sm">
+      <table className="w-full text-left text-base">
         <thead className="border-b border-gray-600 text-white">
           <tr>
-            <th className="px-2 py-1">S.No</th>
-            <th className="px-2 py-1">Δ</th>
-            <th className="px-2 py-1">+Δ</th>
-            <th className="px-2 py-1">−Δ</th>
-            <th className="px-2 py-1">S.No</th>
+            <th className="px-3 py-2">S.No</th>
+            <th className="px-3 py-2">Δ</th>
+            <th className="px-3 py-2">+Δ</th>
+            <th className="px-3 py-2">−Δ</th>
+            <th className="px-3 py-2">S.No</th>
           </tr>
         </thead>
         <tbody>
@@ -26,14 +26,14 @@ export default function ResultsTable({ levels, closestToHighIdx, closestToLowIdx
 
   return (
     <div className="max-h-96 overflow-y-auto">
-      <table className="w-full text-left text-sm">
+      <table className="w-full text-left text-base">
         <thead className="border-b border-gray-600 text-white sticky top-0 bg-gray-800">
           <tr>
-            <th className="px-2 py-1">S.No</th>
-            <th className="px-2 py-1">Δ</th>
-            <th className="px-2 py-1">+Δ</th>
-            <th className="px-2 py-1">−Δ</th>
-            <th className="px-2 py-1">S.No</th>
+            <th className="px-3 py-2">S.No</th>
+            <th className="px-3 py-2">Δ</th>
+            <th className="px-3 py-2">+Δ</th>
+            <th className="px-3 py-2">−Δ</th>
+            <th className="px-3 py-2">S.No</th>
           </tr>
         </thead>
         <tbody>
@@ -53,11 +53,11 @@ export default function ResultsTable({ levels, closestToHighIdx, closestToLowIdx
               if (showSno) sno++;
               return (
                 <tr key={i} className="hover:bg-gray-700">
-                  <td className="px-2 py-1 text-gray-400">{showSno ? sno : ""}</td>
-                  <td className="px-2 py-1 font-medium">{lv.delta}</td>
-                  <td className={"px-2 py-1 " + plusClass}>{formatPrice(lv.plus)}</td>
-                  <td className={"px-2 py-1 " + minusClass}>{formatPrice(lv.minus)}</td>
-                  <td className="px-2 py-1 text-gray-400">{showSno ? sno : ""}</td>
+                  <td className="px-3 py-2 text-gray-400">{showSno ? sno : ""}</td>
+                  <td className="px-3 py-2 font-medium">{lv.delta}</td>
+                  <td className={"px-3 py-2 " + plusClass}>{formatPrice(lv.plus)}</td>
+                  <td className={"px-3 py-2 " + minusClass}>{formatPrice(lv.minus)}</td>
+                  <td className="px-3 py-2 text-gray-400">{showSno ? sno : ""}</td>
                 </tr>
               );
             });

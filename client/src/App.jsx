@@ -12,15 +12,9 @@ export default function App() {
   const [mode, setMode] = useState("manual");
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
-  const [customColors, setCustomColors] = useState({});
-
-  const handleColorChange = useCallback((index, side, hex) => {
-    setCustomColors((prev) => ({ ...prev, [index + '-' + side]: hex }));
-  }, []);
 
   const handleManualCalculate = useCallback((inputs) => {
     setError(null);
-    setCustomColors({});
 
     const errMsg = validateOHLC(inputs);
     if (errMsg) {
@@ -48,7 +42,6 @@ export default function App() {
 
   const handleOptionsCalculate = useCallback((inputs) => {
     setError(null);
-    setCustomColors({});
 
     const errMsg = validateOHLC(inputs);
     if (errMsg) {
@@ -105,8 +98,6 @@ export default function App() {
                 levels={results.levels}
                 closestToHighIdx={results.closestToHighIdx}
                 closestToLowIdx={results.closestToLowIdx}
-                customColors={customColors}
-                onColorChange={handleColorChange}
               />
               <ExportControls levels={results.levels} />
             </>

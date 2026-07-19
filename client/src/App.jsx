@@ -1,45 +1,24 @@
 import { useState, useCallback } from "react";
 import InputModeToggle from "./components/InputModeToggle";
 import ManualForm from "./components/ManualForm";
-import OptionsForm from "./components/OptionsForm";
 import NotesPanel from "./components/NotesPanel";
 import PivotDisplay from "./components/PivotDisplay";
 import ResultsTable from "./components/ResultsTable";
-import ExportControls from "./components/ExportControls";
 import { calculateLevels } from "./algorithms/levels";
 import { validateOHLC } from "./utils/validation";
 
+const MODE_LABELS = {
+  index: "Index",
+  ce: "CE",
+  pe: "PE",
+};
+
 export default function App() {
-  const [mode, setMode] = useState("manual");
+  const [mode, setMode] = useState("index");
   const [results, setResults] = useState(null);
   const [error, setError] = useState(null);
 
-  const handleManualCalculate = useCallback((inputs) => {
-    setError(null);
-
-    if (!isNaN(inputs.manualPivot)) {
-      const res = calculateLevels({
-        open: 0, high: inputs.high, low: inputs.low, close: 0,
-        manualPivot: inputs.manualPivot,
-      });
-      setResults(res);
-      return;
-    }
-
-    const errMsg = validateOHLC(inputs);
-    if (errMsg) {
-      setError(errMsg);
-      setResults(null);
-      return;
-    }
-
-    const res = calculateLevels({
-      open: inputs.open, high: inputs.high, low: inputs.low, close: inputs.close,
-    });
-    setResults(res);
-  }, []);
-
-  const handleOptionsCalculate = useCallback((inputs) => {
+  const handleCalculate = useCallback((inputs) => {
     setError(null);
 
     if (!isNaN(inputs.manualPivot)) {
@@ -70,19 +49,19 @@ export default function App() {
         <div className="md:w-1/2 p-8 border-r border-gray-800">
           <InputModeToggle mode={mode} onChange={setMode} />
 
-          {mode === "manual" && <ManualForm onCalculate={handleManualCalculate} />}
-
-          {mode === "options" && <OptionsForm onCalculate={handleOptionsCalculate} />}
+          <ManualForm key={mode} mode={mode} onCalculate={handleCalculate} />
 
           {error && (
-            <div className="mt-4 p-3 bg-red-900 bg-opacity-40 rounded-md text-red-400 text-sm">
+            <div className="mt-4 p-3 bg-red-900 bg-opacity-40 rounded-md text-red-400 text-base">
               {error}
             </div>
           )}
         </div>
 
         <div className="md:w-1/2 p-8 bg-gray-800">
-          <h2 className="text-2xl font-bold mb-6 text-green-400">Fibonacci Levels</h2>
+          <h2 className="text-2xl font-bold mb-6 text-green-400">
+            Fibonacci Levels — {MODE_LABELS[mode]}
+          </h2>
 
           {results && (
             <>
@@ -96,7 +75,6 @@ export default function App() {
                 closestToHighIdx={results.closestToHighIdx}
                 closestToLowIdx={results.closestToLowIdx}
               />
-              <ExportControls levels={results.levels} />
             </>
           )}
 
@@ -104,7 +82,7 @@ export default function App() {
             <p className="text-gray-400 text-base">Results will appear here after calculation.</p>
           )}
 
-          <NotesPanel />
+          <NotesPanel key={mode} mode={mode} />
         </div>
       </div>
     </div>

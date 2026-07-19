@@ -3,22 +3,24 @@ import { useState, useEffect } from "react";
 const NOTES_KEYS = ["buyAt", "target", "stoploss", "totalLines"];
 const LABELS = ["Buy at:", "Target:", "Stoploss:", "Total Lines:"];
 
-export default function NotesPanel() {
+function lsKey(mode, key) { return mode + "_" + key; }
+
+export default function NotesPanel({ mode }) {
   const [values, setValues] = useState(() => {
     const saved = {};
     NOTES_KEYS.forEach((key) => {
-      saved[key] = localStorage.getItem("notes_" + key) || "";
+      saved[key] = localStorage.getItem(lsKey(mode, key)) || "";
     });
-    saved.remarks = localStorage.getItem("notes_remarks") || "";
+    saved.remarks = localStorage.getItem(lsKey(mode, "remarks")) || "";
     return saved;
   });
 
   useEffect(() => {
     NOTES_KEYS.forEach((key) => {
-      localStorage.setItem("notes_" + key, values[key]);
+      localStorage.setItem(lsKey(mode, key), values[key]);
     });
-    localStorage.setItem("notes_remarks", values.remarks);
-  }, [values]);
+    localStorage.setItem(lsKey(mode, "remarks"), values.remarks);
+  }, [values, mode]);
 
   const handleChange = (key) => (e) => {
     setValues((prev) => ({ ...prev, [key]: e.target.value }));

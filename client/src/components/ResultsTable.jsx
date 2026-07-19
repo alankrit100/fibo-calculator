@@ -1,9 +1,20 @@
+import { useState } from "react";
 import { formatPrice } from "../utils/formatters";
 
 export default function ResultsTable({ levels, closestToHighIdx, closestToLowIdx }) {
+  const [selected, setSelected] = useState(null);
+
+  function selectCell(row, col) {
+    if (selected && selected.row === row && selected.col === col) {
+      setSelected(null);
+    } else {
+      setSelected({ row, col });
+    }
+  }
+
   if (!levels || levels.length === 0) {
     return (
-      <table className="w-full text-left text-base">
+      <table className="w-full text-left text-base select-none">
         <thead className="border-b border-gray-600 text-white">
           <tr>
             <th className="px-3 py-2">S.No</th>
@@ -24,9 +35,14 @@ export default function ResultsTable({ levels, closestToHighIdx, closestToLowIdx
     );
   }
 
+  function cellClasses(base, row, col) {
+    const isSelected = selected && selected.row === row && selected.col === col;
+    return (base || "") + (isSelected ? " outline outline-2 outline-blue-400" : "");
+  }
+
   return (
     <div className="max-h-96 overflow-y-auto">
-      <table className="w-full text-left text-base">
+      <table className="w-full text-left text-base select-none">
         <thead className="border-b border-gray-600 text-white sticky top-0 bg-gray-800">
           <tr>
             <th className="px-3 py-2">S.No</th>
@@ -53,11 +69,36 @@ export default function ResultsTable({ levels, closestToHighIdx, closestToLowIdx
               if (showSno) sno++;
               return (
                 <tr key={i} className="hover:bg-gray-700">
-                  <td className="px-3 py-2 text-gray-400">{showSno ? sno : ""}</td>
-                  <td className="px-3 py-2 font-medium">{lv.delta}</td>
-                  <td className={"px-3 py-2 " + plusClass}>{formatPrice(lv.plus)}</td>
-                  <td className={"px-3 py-2 " + minusClass}>{formatPrice(lv.minus)}</td>
-                  <td className="px-3 py-2 text-gray-400">{showSno ? sno : ""}</td>
+                  <td
+                    className={cellClasses("px-3 py-2 text-gray-400", i, "sno")}
+                    onClick={() => selectCell(i, "sno")}
+                  >
+                    {showSno ? sno : ""}
+                  </td>
+                  <td
+                    className={cellClasses("px-3 py-2 font-medium", i, "delta")}
+                    onClick={() => selectCell(i, "delta")}
+                  >
+                    {lv.delta}
+                  </td>
+                  <td
+                    className={cellClasses("px-3 py-2 " + plusClass, i, "plus")}
+                    onClick={() => selectCell(i, "plus")}
+                  >
+                    {formatPrice(lv.plus)}
+                  </td>
+                  <td
+                    className={cellClasses("px-3 py-2 " + minusClass, i, "minus")}
+                    onClick={() => selectCell(i, "minus")}
+                  >
+                    {formatPrice(lv.minus)}
+                  </td>
+                  <td
+                    className={cellClasses("px-3 py-2 text-gray-400", i, "sno-r")}
+                    onClick={() => selectCell(i, "sno-r")}
+                  >
+                    {showSno ? sno : ""}
+                  </td>
                 </tr>
               );
             });

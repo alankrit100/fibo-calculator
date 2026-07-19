@@ -2,11 +2,19 @@ import { useState, useEffect } from "react";
 
 const FIELDS = ["open", "high", "low", "close"];
 
-export default function ManualForm({ onCalculate }) {
+function lsKey(mode, key) { return mode + "_" + key; }
+
+const HEADINGS = {
+  index: "Index OHLC or Pivot",
+  ce: "CE OHLC or Pivot",
+  pe: "PE OHLC or Pivot",
+};
+
+export default function ManualForm({ mode, onCalculate }) {
   const [values, setValues] = useState(() => {
     const saved = {};
     FIELDS.forEach((key) => {
-      saved[key] = localStorage.getItem(key) || "";
+      saved[key] = localStorage.getItem(lsKey(mode, key)) || "";
     });
     saved.manualPivot = "";
     return saved;
@@ -14,9 +22,9 @@ export default function ManualForm({ onCalculate }) {
 
   useEffect(() => {
     FIELDS.forEach((key) => {
-      if (values[key]) localStorage.setItem(key, values[key]);
+      if (values[key]) localStorage.setItem(lsKey(mode, key), values[key]);
     });
-  }, [values]);
+  }, [values, mode]);
 
   const handleChange = (key) => (e) => {
     setValues((prev) => ({ ...prev, [key]: e.target.value }));
@@ -28,13 +36,12 @@ export default function ManualForm({ onCalculate }) {
       parsed[key] = parseFloat(values[key]);
     });
     parsed.manualPivot = parseFloat(values.manualPivot);
-
     onCalculate(parsed);
   };
 
   return (
     <div className="space-y-5">
-      <h2 className="text-2xl font-bold text-blue-400">Enter OHLC or Pivot Value</h2>
+      <h2 className="text-2xl font-bold text-blue-400">{HEADINGS[mode]}</h2>
       {FIELDS.map((key) => (
         <div key={key}>
           <label className="block mb-1 text-base font-semibold capitalize">{key}</label>
